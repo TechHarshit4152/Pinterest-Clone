@@ -1,0 +1,38 @@
+<% include ./partials/header.ejs%>
+<div class="create-board-overlay flex">
+    <div class="container w-[100%] pl-[60px] h-screen flex items-center justify-center">
+        <div class="box w-[520px] h-[400px] bg-white rounded-[20px] px-8 py-7 flex items-center flex-col">
+            <h2 class="text-[27px] font-semibold mt-7" style="color: #232323;">Create board</h2>
+            <form action="/create/board" method="post" class="w-full flex flex-col mt-16" id="board-form">
+                <label for="Board-name" class="text-xs" style="color: #3a3939;">Name</label>
+                <input type="text" name="boardName" class="px-3 py-2 rounded-[14px] mt-2" style="border: 2px solid #dbd9d9;" id="Board-name" placeholder='Like "Places to Go" or "Recipes to Make"'>
+            </form>
+            <div class="w-full mt-20 flex justify-end">
+                <button class="px-4 rounded-full pb-2 pt-3 bg-red-600 font-semibold text-white" type="submit" id="create-board-btn">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var input = document.getElementById('Board-name')
+    var button = document.getElementById('create-board-btn');
+    var boardForm = document.getElementById('board-form')
+
+    input.addEventListener('input', function() {
+        if(input.value  !== '') {
+            button.classList.remove('bg-zinc-200')
+            button.classList.add('bg-red-600')
+        } else {
+            button.classList.remove('bg-zinc-200')
+            button.classList.add('bg-red-600')
+        }
+    })
+
+    button.addEventListener('click', function() {
+        if(input.value !== '') {
+            boardForm.submit()
+        }
+    })
+</script>
+<% include ./partials/footer.ejs%>

@@ -1,0 +1,143 @@
+<% include ./partials/header.ejs%>
+    <div class="profile w-full min-h-screen bg-white pt-1 relative">
+        <div class="search-overlay flex" style="z-index: 2; padding-left: 400px;display: none;">
+            <div class="w-[680px] h-[450px] rounded-b-[30px] search-overlay-child py-3 bg-white">
+                
+            </div>
+        </div>
+        <!-- <form id="uploadform" hidden action="/fileupload" method="post" enctype="multipart/form-data">
+            <input type="file" name="image">
+        </form> -->
+        <div class="profdets flex flex-col items-start items-center mt-3">
+            <div class="relative">
+                <!-- <span id="uploadicon" class="w-8 h-8 absolute bottom-0 right-0 rounded-full flex items-center justify-center bg-zinc-200 cursor-pointer">
+                   <i class="text-zinc-800 ri-pencil-fill"></i>
+                </span> -->
+                <div class="w-32 h-32 bg-zinc-200 rounded-full overflow-hidden">
+                    <img src="/images/uploads/<%= selectedUser.profileImage %>" class="w-full h-full object-cover bg-top">
+                </div>
+            </div>
+            <h1 class=" font-semibold mt-3" id="name"><%= selectedUser.name %></h1>
+            <div class="flex items-center">
+                <img src="/images/username.png" alt="">
+                <h3 class="text-md ml-[5px]" id="Uname" ><%= selectedUser.username %></h3>
+            </div>
+            <p style="color: #232323; margin-top: 5px;"><%= selectedUser.bio %></p>
+            <div class="flex w-full items-center justify-center">
+                <% if(selectedUser.followers.length>1) { %>
+
+                    <h3 class="follow"><%= selectedUser.followers.length %> followers</h3>
+                <% } else { %>
+                    <h3 class="follow"><%= selectedUser.followers.length %> follower</h3>
+                <% } %>
+                <p class="text-lg ml-[3px] mr-[3px]">.</p>
+                <% if(selectedUser.followings.lenght>1) { %>
+
+                    <h3 class="follow font-light"><%= selectedUser.followings.lenght %> followings</h3>
+                <% } else { %>
+                    <h3 class="follow font-light"><%= selectedUser.followings.length %> following</h3>
+                <% } %>
+            </div>
+            <!-- <a href="/settings/edit" class="edit mt-3 px-7 py-3 rounded-full">Edit Profile</a> -->
+            <form action="/follow/<%= selectedUser._id %>" method="post">
+                <% if(selectedUser.followers.includes(user._id))  { %>
+
+                    <button class="follow mt-3 px-4 pt-3 pb-2 rounded-full bg-[#171717] font-semibold text-white">Following</button>
+                <% } else { %>
+                    <button class="follow mt-3 px-5 pt-4 pb-3 rounded-full bg-red-600 font-semibold text-white">Follow</button>
+                <%  }  %>
+            </form>
+            <!-- <a href="/add" class="px-10 py-2 rounded-lg bg-red-700 text-xs font-semibold mt-7">Add New Post</a> -->
+        </div>
+        <div class="w-full flex items-center justify-center mt-[40px]">
+            <!-- <div class="w-[260px] h-16 flex items-center justify-center  gap-10">
+                <a href="/profile/_created" class="saved-post px-0 save py-1">Created</a>
+                <a href="/profile/_saved" class=" py-1 px-3 rounded-md saved-post saved">Saved</a>
+            </div> -->
+        </div>
+        <div class="card flex flex-wrap gap-10 px-10 mt-10">
+            <% selectedUser.posts.forEach(function(elem) { %>
+                <div class="card flex flex-col items-start" style="flex-basis: auto;">
+                    <div class="container-image pointer min-w-32 max-w-[220px] rounded-lg overflow-hidden items-start relative">
+                        <img src="/images/uploads/<%= elem.image %>" class="w-full h-full object-cover relative" alt="">
+                        <div class="overlay flex flex-col justify-between px-4 py-4" id="Overlay-Click">
+                            <div class="w-full overlay-div1 flex flex-col justify-end pointer">
+                                <form action="/User/save/<%= elem._id %>" method="post" id="savePostForm" class="w-full flex mt-[-10px]">
+                                    <select name="selectedBoard" id="" style="cursor: pointer;" class="w-[80%] rounded-[20px] border-0 outline-0 bg-transparent text-white font-semibold" required>
+                                        <% user.boards.forEach(function(board) { %>
+                                            <option value="<%= board._id %>" class="p-[5px] w-full text-black font-semibold"><%= board.boardName %></option>
+                                        <% }) %>
+                                    </select>
+
+                                        <% if (user.boards.some(b => b.posts && b.posts.includes(elem._id))) { %>
+                                            <button class="px-5 pb-3 pt-4 rounded-full save-btn font-semibold text-white" id="savePostBtn" type="submit" style="background-color: #212121;">Saved</button>
+                                        <% } else { %>
+                                            <button class="px-5 pb-3 pt-4 bg-red-600 rounded-full save-btn font-semibold text-white" id="savePostBtn" type="submit">Save</button>
+                                        <% } %>
+                                        <!-- <button class="px-5 pb-3 pt-4 bg-red-600 rounded-full save-btn font-semibold text-white" id="savePostBtn" type="submit">Save</a> -->
+                                </form>
+                                <a href="/pin/<%= elem._id %>" id="RedirectToSee" style="display: none;">>Redirect</a>
+                            </div>
+                            <div class="w-full h-[80%]" onclick="redirectToPage('<%= elem._id %>')"></div>
+                        </div>
+                    </div>
+                    <a href="/pin/<%= elem._id %>" id="TitleforRedirect" class="mt-2 text-s redirect-link" style="display: none;"><%= elem.Title %></a>
+                    <!-- <div class="flex gap-2 items-center">
+                        <div class="w-[30px] h-[30px] overflow-hidden rounded-full">
+                            <img src="/images/uploads/<%= elem.user.profileImage %>" class="w-full h-full object-cover" alt="">
+                        </div>
+                        <a href="/User/<%= elem.user._id %>/<%= elem.user.username %>" class="text-xs font-semibold hover:underline opacity-65">@<%= elem.user.username%></a>
+                    </div> -->
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector("#uploadicon").addEventListener("click", function() {
+            document.querySelector("#uploadform input").click()
+        })
+
+        document.querySelector("#uploadform input").addEventListener("change", function() {
+            document.querySelector("#uploadform").submit()
+        })
+
+
+        // const redirectLinks = document.querySelectorAll('.redirect-link');
+
+        // function redirectToPage(postId) {
+        //     const link = Array.from(redirectLinks).find(el => el.getAttribute('href') === `/pin/${postId}`);
+        //     if (link) {
+        //         link.click();
+        //     }
+        // }
+
+        // document.addEventListener("DOMContentLoaded", function() {
+        //     redirectLinks.forEach(link => {
+        //         link.addEventListener("click", function() {
+        //             const postId = this.getAttribute('data-post-id');
+        //             redirectToPage(postId);
+        //         });
+        //     });
+        // });
+    </script>
+
+    <script>
+        // const RedirectToSee = document.getElementById('TitleforRedirect')
+        // const DivToCLick = document.getElementById('Overlay-Click')
+        // function RedirectToPage(event) {
+        //     event.preventDefault()
+        //     RedirectToSee.click()
+        //     event.preventDefault()
+        // }
+
+        const redirectLinks = document.querySelectorAll('.redirect-link');
+
+        function redirectToPage(postId) {
+            const link = Array.from(redirectLinks).find(el => el.getAttribute('href') === `/pin/${postId}`);
+            if (link) {
+                link.click();
+            }
+        }
+    </script>
+<% include ./partials/footer.ejs%>

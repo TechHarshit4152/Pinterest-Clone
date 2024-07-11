@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+#pin {
+    font-weight: 550;
+}
+
+#Search::placeholder {
+    color: #a7aaaa;
+    letter-spacing: 0;
+    font-size: 16px;
+}
+
+#selPin:hover {
+    background-color: #bebebe;
+}
+
+#selpin {
+    cursor: pointer;
+}
+
+#name {
+    color: #121212;
+    font-weight: 550;
+    font-size: 35px;
+}
+
+#Uname {
+    font-size: 15px;
+    color: #505050;
+}
+
+.follow {
+    margin-top: 7px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #363636;
+}
+
+.edit {
+    background: #e2e2e2;
+    word-spacing: 1px;
+    color: #353535;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .5px;
+}
+
+.saved-post {
+    color: #333333;
+    font-weight: 600;
+}
+
+.saved:hover {
+    background: #e9e9e9;
+}
+
+.start {
+    align-items: start;
+}
+
+
+.save {
+    border-bottom: 3px solid #181818;
+}
+
+.newpost {
+    font-family: 'Poppins', sans-serif;
+    color: #333333;
+}
+
+#createPost {
+    color: #ffffff;
+    background-color: #e60024;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: opacity .1s ease;
+}
+
+.search-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    transition: opacity .1s ease;
+}
+
+.saved-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transition: opacity .1s ease;
+}
+
+.overlay-parent:hover .saved-overlay{
+    opacity: 1;
+}
+
+.container-image:hover .overlay {
+    opacity: 1;
+}
+
+.container-image:hover {
+    cursor: zoom-in;
+}
+
+.overlay-div1 {
+    cursor: pointer;
+}
+
+.save-btn {
+    transform: scale(.9);
+}
+
+.create-board {
+    transition: .2s ease-in-out;
+}
+
+.create-board:hover {
+    cursor: pointer;
+    background: #e0e0e0;
+}
+
+.create-board:active {
+    transform: scale(.90);
+}
+
+.create-overlay {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .3);
+    opacity: 1;
+    transition: opacity .1s ease;
+}
+
+.create-board-overlay {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .7);
+    opacity: 1;
+    transition: opacity .1s ease;
+}

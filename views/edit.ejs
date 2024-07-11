@@ -1,0 +1,93 @@
+<% include ./partials/header.ejs%>
+<div class="container w-full flex h-screen mt-2 relative">
+    <div class="w-[27%] h-full px-6 pt-10 gap-5 flex flex-col">
+        <div><a href="" class="ml-3 text-md font-semibold pb-2" style="color: #252525; border-bottom: 3px solid #181818;">Edit profile</a></div>
+        <div><a href="" class="px-3 text-md font-semibold py-2 rounded-lg hover:bg-zinc-200" style="color: #282828;">Account management</a></div>
+        <div><a href="" class="px-3 text-md font-semibold py-2 rounded-lg hover:bg-zinc-200" style="color: #282828;">Profile visibility</a></div>
+        <div><a href="" class="px-3 text-md font-semibold py-2 rounded-lg hover:bg-zinc-200" style="color: #282828;">Tune your home feed</a></div>
+        <div><a href="" class="px-3 text-md font-semibold py-2 rounded-lg hover:bg-zinc-200" style="color: #282828;">Claimed accounts</a></div>
+        <div><a href="" class="px-3 text-md font-semibold py-2 rounded-lg hover:bg-zinc-200" style="color: #282828;">Social permissions</a></div>
+        <div><a href="" class="px-3 text-md font-semibold py-2 rounded-lg hover:bg-zinc-200" style="color: #282828;">Notifications</a></div>
+        <div><a href="" class="px-3 text-md font-semibold py-2 rounded-lg hover:bg-zinc-200" style="color: #282828;">Privacy and data</a></div>
+        <div><a href="" class="px-3 text-md font-semibold py-2 rounded-lg hover:bg-zinc-200" style="color: #282828;">Security</a></div>
+        <div><a href="" class="px-3 text-md font-semibold py-2 rounded-lg hover:bg-zinc-200" style="color: #282828;">Branded Content</a></div>
+    </div>
+    <div class="w-[73%] h-[120vh] flex flex-col">
+        <h1 class="pr-6 pt-9" style="color: #292929; font-weight: 600;font-size: 28px;">Edit profile</h1>
+        <p style="line-height: 19px;color: #343434;" class="text-md mt-2">Keep your personal details private. Information you add here is <br> visible to any who can view your profile.</p>
+        <form action="/editProfile" method="post" id="editform" enctype="multipart/form-data" class="w-full mt-8 h-full">
+            <div class="w-full flex flex-col">
+                <p class="text-xs mb-1" style="color: #313131;">Photo</p>
+                <div class="w-full flex items-center gap-4">
+
+                    <div class="w-[70px] h-[70px] bg-zinc-300 rounded-full flex items-center justify-center overflow-hidden">
+                        <% if(user.profileImage) { %>
+                            <img class="w-full h-full object-cover" src="/images/uploads/<%= user.profileImage %>" alt="">
+                        <% }else { %>
+                            <i class="fa-solid fa-user" id="userIcon" style="font-size: 40px;color: #fff;"></i>
+                        <% } %>
+                        <img src="" id="imagePreview" alt="" class="w-full h-full object-cover" style="display: none;">
+                    </div>
+                    <a onclick="ProfileImageSelector(event)" href="#" class="px-3 py-2 bg-zinc-200 rounded-full font-semibold" style="color: #313131;">Change</a>
+                    <input type="file" name="fileImage" style="display: none;" id="fileImageSelector" onchange="previewImage()">
+                </div>
+                <div class="w-full mt-6">
+                    <div class="w-full flex flex-col">
+                        <label class="text-xs ml-2" for="settingsName">Name</label>
+                        <input type="text" name="name" id="settingsName" value="<%= user.name %>" class="px-3 w-[490px] py-3 rounded-[20px] outline-0" style="border: 3px solid #d7d7d7;">
+                    </div>
+                    <div class="flex flex-col mt-5">
+                        <label for="bio" class="text-xs ml-2">About</label>
+                        <!-- <textarea class="text-black block w-[490px] px-3 h-[100px] bg-white py-2 mb-4 rounded-[20px] outline-0" style="background: #fff;border: 3px solid #d7d7d7;" id="bio" type="text" placeholder="Tell your story" name="description"></textarea>   -->
+                        <input type="text" name="bio" id="bio" class="w-[490px] px-3 pt-3 pb-16 rounded-[20px] overflow-hidden flex-wrap outline-0" style="border: 3px solid #d7d7d7;" placeholder="Tell your story" value="<%= user.bio %>">
+                    </div>
+                    <div class="w-full flex flex-col mt-5">
+                        <label class="text-xs ml-2" for="settingsUsername">Username</label>
+                        <input type="text" name="username" id="settingsUsername" value="<%= user.username %>" class="px-3 w-[490px] py-3 rounded-[20px] outline-0" style="border: 3px solid #d7d7d7;">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="absolute w-full bg-white h-[80px] bottom-0 left-0 flex items-center justify-center" style="position: fixed; box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, .5);"><Button type="submit" id="Submitbtn">Save</Button></div>
+</div>
+
+<script>
+    const ImageSelector = document.getElementById('fileImageSelector')
+    const Submitbtn = document.getElementById('Submitbtn')
+    const editForm = document.getElementById('editform')
+
+    Submitbtn.addEventListener('click', function() {
+        editForm.submit()
+    })
+
+    function ProfileImageSelector(event) {
+        event.preventDefault()
+        ImageSelector.click()
+    }
+
+    function previewImage() {
+            const input = document.getElementById('fileImageSelector');
+            const previewContainer = document.getElementById('imagePreviewContainer');
+            const fileInputContainer = document.getElementById('fileInputContainer');
+            const SubmitButton = document.getElementById('formsubmit')
+            const desc = document.getElementById('desc')
+            const title = document.getElementById('title')
+            const userIcon = document.getElementById('userIcon')
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('imagePreview').style.display = "block"
+                    userIcon.style.display = "none"
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }    
+        }
+
+</script>
+
+<% include ./partials/footer.ejs%>
